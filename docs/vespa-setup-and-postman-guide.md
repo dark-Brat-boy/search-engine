@@ -134,20 +134,20 @@ Add placeholder vector
 Feed it into Vespa
 
 ⭐ Get Document
-GET {{API_BASE_URL}}/documents/{id}?tenant=zoro-uk
+GET {{API_BASE_URL}}/documents/{id}?tenant=
 
 ⭐ BM25 Search
-GET {{API_BASE_URL}}/search?q=hammer&tenant=zoro-uk
+GET {{API_BASE_URL}}/search?q=hammer&tenant=
 
 ⭐ Vector Search (Simple placeholder)
-GET {{API_BASE_URL}}/search/vector?tenant=zoro-uk
+GET {{API_BASE_URL}}/search/vector?tenant=
 
 
 Uses static embedding [0.5 …] for now
 (ready for HuggingFace upgrade later)
 
 ⭐ Delete Document
-DELETE {{API_BASE_URL}}/documents/{id}?tenant=zoro-uk
+DELETE {{API_BASE_URL}}/documents/{id}?tenant=
 
 🚀 8. Testing Vespa Direct API (Optional)
 
