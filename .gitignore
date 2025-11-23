@@ -1,0 +1,117 @@
+# ========================================
+# Node.js
+# ========================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+.pnpm-store/
+
+# Build directories
+dist/
+build/
+tmp/
+temp/
+
+# Local environment files
+.env
+.env.local
+.env.*.local
+
+# ========================================
+# Vespa Search Engine
+# ========================================
+# Vespa data + logs (generated inside container)
+vespa-data/
+var/
+logs/
+cache/
+tmp/
+
+# Vespa config
+/home/vespa/.vespa/
+app-packages/*.zip
+
+# Avoid committing Vespa application logs
+vespa-app/logs/
+vespa-app/tmp/
+
+# ========================================
+# Docker
+# ========================================
+# Docker build cache
+**/docker-cache/
+docker/volumes/
+docker-compose.override.yml
+
+# Local override for environment
+docker.env
+
+# ========================================
+# IDE / Editor
+# ========================================
+.vscode/
+.vscode-test/
+.idea/
+*.iml
+
+# JetBrains
+*.ipr
+*.iws
+
+# ========================================
+# OS Files
+# ========================================
+.DS_Store
+Thumbs.db
+.vscode
+.Trashes
+*.swp
+*.swo
+
+# ========================================
+# Logs
+# ========================================
+*.log
+logs/
+debug.log
+
+# pm2 logs
+.pids/
+*.pid
+*.seed
+
+# ========================================
+# API Service
+# ========================================
+api/node_modules/
+api/logs/
+api/*.log
+
+# ========================================
+# Archives
+# ========================================
+*.tar
+*.gz
+*.zip
+
+# ========================================
+# Postman
+# ========================================
+.postman/
+*.postman_collection
+*.postman_environment
+
+# ========================================
+# NPM global files
+# ========================================
+*.tgz
+
+# ========================================
+# Misc
+# ========================================
+coverage/
+.nyc_output/
+.tmp/

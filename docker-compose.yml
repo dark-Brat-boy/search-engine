@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  vespa:
+    image: vespaengine/vespa:latest
+    container_name: vespa
+    hostname: vespa
+    ports:
+      - "8080:8080"
+      - "19071:19071"
+    volumes:
+      - ./vespa-app:/app
+    environment:
+      VESPA_CONFIGSERVER_HOSTNAME: vespa
+
+  api:
+    build: ./api
+    container_name: document-api
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - vespa
+    volumes:
+      - ./api:/usr/src/app
+    environment:
+      VESPA_ENDPOINT: http://vespa:8080

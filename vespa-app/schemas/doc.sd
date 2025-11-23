@@ -1,0 +1,52 @@
+schema doc {
+
+  document doc {
+
+    field id type string {
+      indexing: attribute | summary
+    }
+
+    field tenantId type string {
+      indexing: attribute | summary
+    }
+
+    field title type string {
+      indexing: index | summary
+    }
+
+    field body type string {
+      indexing: index | summary
+    }
+
+    field tags type array<string> {
+      indexing: index | summary
+    }
+
+    # Fixed tensor type: MUST have a dimension name
+    field vector type tensor<float>(x[128]) {
+      indexing: attribute
+    }
+  }
+
+  fieldset default {
+    fields: title, body, tags
+  }
+
+  rank-profile bm25 inherits default {
+    first-phase {
+      expression: bm25(title) + bm25(body)
+    }
+  }
+
+  rank-profile semantic inherits default {
+    inputs {
+      query(qvec) tensor<float>(x[128])
+    }
+    first-phase {
+      expression: closeness(field, vector)
+    }
+  }
+
+}
+
+
