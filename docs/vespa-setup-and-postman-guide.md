@@ -25,6 +25,8 @@ Install Docker Desktop
 Download: https://www.docker.com/products/docker-desktop/
 
 🚀 2. Project Structure
+
+```
 search-engine/
 ├── docker-compose.yml
 │
@@ -43,7 +45,10 @@ search-engine/
 |   └── middleware/
 │
 └── docs/
-    └── vespa-setup-and-postman-guide.md
+    ├── architecture.md
+    ├── vespa-setup-and-postman-guide.md
+    └── Search.postman_collection.json
+```
 
 🚀 3. Docker Compose (No Changes Needed)
 
@@ -125,29 +130,27 @@ Body:
 
 The API will automatically:
 
-Generate a UUID
-
-Add tenantId
-
-Add placeholder vector
-
-Feed it into Vespa
+- Generate a UUID v4 as document ID
+- Add tenantId from query parameter
+- Generate 128-dim vector embedding from title+body (hash-based)
+- Feed document into Vespa with proper tensor format
 
 ⭐ Get Document
-GET {{API_BASE_URL}}/documents/{id}?tenant=
+GET http://localhost:3000/documents/{id}?tenant=tenantId
+(Note: tenant is required by rate limiter middleware)
 
 ⭐ BM25 Search
-GET {{API_BASE_URL}}/search?q=hammer&tenant=
+GET http://localhost:3000/search?q=hammer&tenant=tenantId
 
 ⭐ Vector Search (Simple placeholder)
-GET {{API_BASE_URL}}/search/vector?tenant=
+GET http://localhost:3000/search?q=hammer&tenant=tenantId&vector=true
 
-
-Uses static embedding [0.5 …] for now
+Uses static embedding [0.5, 0.5, ..., 0.5] (128 dimensions) for query vector
 (ready for HuggingFace upgrade later)
 
 ⭐ Delete Document
-DELETE {{API_BASE_URL}}/documents/{id}?tenant=
+DELETE http://localhost:3000/documents/{id}?tenant=tenantId
+(Note: tenant is required by rate limiter middleware)
 
 🚀 8. Testing Vespa Direct API (Optional)
 

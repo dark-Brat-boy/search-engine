@@ -55,13 +55,26 @@ Vespa indexes + stores
 Search queries → API → Vespa /search
 
 📁 Folder Structure
+
+```
 search-engine/
 ├── api/                     # Node.js API
 │   ├── index.js
+│   ├── package.json
+│   ├── Dockerfile
 │   ├── routes/
+│   │   ├── documents.js
+│   │   ├── search.js
+│   │   └── health.js
 │   ├── services/
+│   │   └── vespaClient.js
 │   ├── utils/
+│   │   ├── embedding.js
+│   │   └── errors.js
+│   ├── middleware/
+│   │   └── rateLimit.js
 │   └── config/
+│       └── config.js
 │
 ├── vespa-app/               # Vespa application
 │   ├── deployment.xml
@@ -69,25 +82,34 @@ search-engine/
 │   └── schemas/
 │       └── doc.sd
 │
-├── docs/                    # Setup + Postman guides
-│   └── vespa-setup-and-postman-guide.md
+├── docs/                    # Documentation
+│   ├── architecture.md
+│   ├── vespa-setup-and-postman-guide.md
+│   └── Search.postman_collection.json
 │
 ├── docker-compose.yml
 └── README.md
+```
 
 📡 API Endpoints Overview
-Documents
-Method	Endpoint	Description
-POST	/documents?tenant={id}	Create / index a document
-GET	/documents/{id}?tenant={id}	Retrieve a document
-DELETE	/documents/{id}?tenant={id}	Delete
-Search
-Method	Endpoint	Description
-GET	/search?q=text&tenant={id}	BM25 search
-GET	/search/vector?tenant={id}	Vector similarity search
-Health Check
-Method	Endpoint
-GET	/health
+
+**Documents**
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/documents?tenant={id}` | Create / index a document (tenant required) |
+| GET | `/documents/{id}?tenant={id}` | Retrieve a document by ID (tenant required for rate limiting) |
+| DELETE | `/documents/{id}?tenant={id}` | Delete document by ID (tenant required for rate limiting) |
+
+**Search**
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/search?q={query}&tenant={id}` | BM25 keyword search |
+| GET | `/search?q={query}&tenant={id}&vector=true` | Vector similarity search (uses static [0.5...] query vector) |
+
+**Health Check**
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/health` | Health check + Vespa dependency status |
 ⚙️ Quick Start
 1. Clone Repo
 git clone <your-repo-url>
@@ -140,10 +162,9 @@ Facets, filters, and aggregations
 
 To keep the demo simple and quick to review:
 
-Vector embeddings use a static placeholder (0.5 × 128)
-
-Rate limiting uses in-memory LRU (not Redis)
-
-No authentication needed
-
-Basic logging only
+- Vector search uses static placeholder query vector [0.5, ..., 0.5] (128 dims)
+- Document vectors are generated from title+body using hash-based algorithm
+- Rate limiting uses in-memory storage (not Redis) - 100 req/min per tenant
+- LRU cache is in-memory only (30s TTL, max 200 entries)
+- No authentication needed
+- Basic logging only (morgan)

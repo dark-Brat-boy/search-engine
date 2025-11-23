@@ -16,9 +16,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{API_BASE_URL}}health",
+							"raw": "{{API_BASE_URL}}/health",
 							"host": [
-								"{{API_BASE_URL}}health"
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"health"
 							]
 						}
 					},
@@ -27,8 +30,38 @@
 				{
 					"name": "add tenant",
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Hammer\",\n  \"body\": \"Strong steel hammer used for construction.\",\n  \"tags\": [\"tools\", \"steel\"]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_BASE_URL}}/documents?tenant=test",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"documents"
+							],
+							"query": [
+								{
+									"key": "tenant",
+									"value": "test"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -36,7 +69,23 @@
 					"name": "Get Document",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{API_BASE_URL}}/documents/cc1b3921-aa99-4e31-a861-296f6df8ac8f?tenant=test",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"documents",
+								"cc1b3921-aa99-4e31-a861-296f6df8ac8f"
+							],
+							"query": [
+								{
+									"key": "tenant",
+									"value": "test"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -44,7 +93,26 @@
 					"name": "Basic Search",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{API_BASE_URL}}/search?q=hammer&tenant=test",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "hammer"
+								},
+								{
+									"key": "tenant",
+									"value": "test"
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -52,7 +120,30 @@
 					"name": "Vector Search",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{API_BASE_URL}}/search?q=hammer&tenant=test&vector=true",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "hammer"
+								},
+								{
+									"key": "tenant",
+									"value": "test"
+								},
+								{
+									"key": "vector",
+									"value": "true"
+								}
+							]
+						}
 					},
 					"response": []
 				}
@@ -104,7 +195,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{VESPA_BASE_URL}}/document/v1/default/doc/docid/1",
+							"raw": "{{VESPA_BASE_URL}}/document/v1/default/doc/docid/cc1b3921-aa99-4e31-a861-296f6df8ac8f",
 							"host": [
 								"{{VESPA_BASE_URL}}"
 							],
@@ -114,7 +205,7 @@
 								"default",
 								"doc",
 								"docid",
-								"1"
+								"cc1b3921-aa99-4e31-a861-296f6df8ac8f"
 							]
 						}
 					},
