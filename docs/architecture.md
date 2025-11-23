@@ -333,6 +333,6 @@ Everything runs locally with no external services required.
 - **Namespace-based multi-tenant architecture**
 - **UI search dashboard**
 - **Online learn-to-rank based on clicks**
-- **Message queue for async operations** (see Section 14)
+- **Message queue for async operations**
 
 ---
