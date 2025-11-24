@@ -167,4 +167,4 @@ To keep the demo simple and quick to review:
 - Rate limiting uses in-memory storage (not Redis) - 100 req/min per tenant
 - LRU cache is in-memory only (30s TTL, max 200 entries)
 - No authentication needed
-- Basic logging only (morgan)
+- Basic logging only
